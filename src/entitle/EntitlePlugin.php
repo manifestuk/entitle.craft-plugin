@@ -143,6 +143,16 @@ class EntitlePlugin extends BasePlugin
     }
 
     /**
+     * Add Twig extensions.
+     *
+     * @return EntitleTwigExtension
+     */
+    public function addTwigExtension()
+    {
+        return new EntitleTwigExtension();
+    }
+
+    /**
      * Defines the plugin settings.
      *
      * @return array

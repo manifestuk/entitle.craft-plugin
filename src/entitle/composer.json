@@ -1,5 +1,8 @@
 {
   "autoload": {
+    "classmap": [
+      "twigextensions/"
+    ],
     "psr-4": {
       "Experience\\Entitle\\App\\": "app/"
     }
