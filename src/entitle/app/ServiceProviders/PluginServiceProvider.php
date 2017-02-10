@@ -75,12 +75,6 @@ class PluginServiceProvider extends AbstractServiceProvider
      */
     protected function prepProtectedWords($string)
     {
-        $words = explode(',', $string);
-
-        array_walk($words, function ($word) {
-            return trim($word);
-        });
-
-        return $words;
+        return explode(',', $string);
     }
 }

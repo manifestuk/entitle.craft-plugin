@@ -40,16 +40,20 @@ class CapitalizationHelper
      */
     protected function initializeCustomProtectedWords(array $words)
     {
-        array_walk(
-            $words,
-            function ($word) {
-                return trim($word);
-            }
-        );
+        $this->customProtectedWords = [];
 
-        $this->customProtectedWords = $words;
+        foreach ($words as $word) {
+            $this->customProtectedWords[] = trim($word);
+        }
     }
 
+    /**
+     * Capitalises the given string, according to AP rules.
+     *
+     * @param string $string
+     *
+     * @return string
+     */
     public function capitalize($string)
     {
         return $this->createStringFromWords(
