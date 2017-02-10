@@ -1,9 +1,8 @@
 {
   "autoload": {
-    "classmap": ["mocks/"],
     "psr-4": {
-      "Experience\Entitle\\Tests\\": "./",
-      "Experience\Entitle\\Utils\\": "../Entitle/utils/"
+      "Experience\\Entitle\\App\\": "../src/entitle/app/",
+      "Experience\\Entitle\\Tests\\": "./"
     }
   },
   "require-dev": {
