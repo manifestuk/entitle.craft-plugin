@@ -1,15 +1,12 @@
-<phpunit bootstrap="vendor/autoload.php" colors="auto">
+<phpunit bootstrap="bootstrap.php" colors="auto">
     <testsuites>
         <testsuite name="Entitle">
-            <directory>utils</directory>
+            <directory>app</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">../entitle/utils</directory>
-            <exclude>
-                <file>../entitle/utils/ServiceLocator.php</file>
-            </exclude>
+            <directory suffix=".php">../entitle/app</directory>
         </whitelist>
     </filter>
     <logging>

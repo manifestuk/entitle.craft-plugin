@@ -2,7 +2,8 @@
   "autoload": {
     "psr-4": {
       "Experience\\Entitle\\App\\": "../src/entitle/app/",
-      "Experience\\Entitle\\Tests\\": "./"
+      "Experience\\Entitle\\Tests\\": "./",
+      "Experience\\Entitle\\Tests\\App\\": "./app/"
     }
   },
   "require-dev": {
