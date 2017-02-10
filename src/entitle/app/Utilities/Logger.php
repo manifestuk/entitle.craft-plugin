@@ -1,4 +1,4 @@
-<?php namespace Experience\Entitle\Utilities;
+<?php namespace Experience\Entitle\App\Utilities;
 
 use Craft\Craft;
 use Craft\Logger as CraftLogger;
