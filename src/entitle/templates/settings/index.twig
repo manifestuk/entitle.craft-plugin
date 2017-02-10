@@ -1,0 +1,10 @@
+{% import '_includes/forms' as forms %}
+
+{{ forms.textField({
+    label: 'Protected Words',
+    instructions: 'A comma-delimited list of the words which should not be changed.',
+    id: 'protectedWords',
+    name: 'protectedWords',
+    placeholder: 'iPhone, MySQL, NASA',
+    value: settings['protectedWords']})
+}}

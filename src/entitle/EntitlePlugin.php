@@ -7,14 +7,13 @@ use Experience\Entitle\App\ServiceProviders\PluginServiceProvider;
 class EntitlePlugin extends BasePlugin
 {
     /**
+     * @var \League\Container\Container;
+     */
+    public static $container;
+    /**
      * @param object
      */
     protected $config;
-
-    /**
-     * @var \League\Container\Container;
-     */
-    protected static $container;
 
     /**
      * Constructor. Loads the config file containing the plugin information.
@@ -126,5 +125,35 @@ class EntitlePlugin extends BasePlugin
     public function hasCpSection()
     {
         return false;
+    }
+
+    /**
+     * Returns the settings page HTML.
+     *
+     * @return string
+     */
+    public function getSettingsHtml()
+    {
+        return craft()->templates->render(
+            'entitle/settings',
+            [
+                'settings' => $this->getSettings(),
+            ]
+        );
+    }
+
+    /**
+     * Defines the plugin settings.
+     *
+     * @return array
+     */
+    protected function defineSettings()
+    {
+        return [
+            'protectedWords' => [
+                'type'     => AttributeType::String,
+                'required' => true,
+            ],
+        ];
     }
 }
