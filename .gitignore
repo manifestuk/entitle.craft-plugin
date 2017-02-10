@@ -4,3 +4,4 @@
 node_modules/
 tmp/
 vendor/
+src/tests/coverage/
