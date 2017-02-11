@@ -18,7 +18,7 @@ Entitle requires PHP 5.4 or above. It has been tested with Craft 2.6.
 ## Configuration ##
 Entitle allows you to specify "protected" words, which are not subject to the AP capitalisation rules. This is useful for ensuring that acronyms, brand names, and the like are not modified.
 
-After installing Entite (as described above), navigate to its settings page, and enter your "protected" words as a comma-delimited string.
+After installing Entitle (as described above), navigate to its settings page, and enter your "protected" words as a comma-delimited string.
 
 ## Usage ##
 There are three ways to use Entitle:
