@@ -3,5 +3,7 @@
   "description": "AP-style title capitalisation for Craft CMS.",
   "version": "0.1.0",
   "developer": "Experience",
-  "developerUrl": "https://experiencehq.net"
+  "developerUrl": "https://experiencehq.net",
+  "documentationUrl": "https://github.com/experience/entitle.craft-plugin/blob/master/src/README.md",
+  "releasesFeedUrl": "https://raw.githubusercontent.com/experience/entitle.craft-plugin/master/src/releases.json"
 }

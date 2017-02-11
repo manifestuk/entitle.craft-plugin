@@ -1,10 +1,15 @@
 ## Entitle ##
+
+[![Build Status](https://travis-ci.org/experience/entitle.craft-plugin.svg?branch=master)](https://travis-ci.org/experience/entitle.craft-plugin)
+
 Entitle is a [Craft plugin][craft] which makes it easy to apply AP-style title capitalisation rules to the text on your website.
 
 [craft]: https://craftcms.com "The CMS of choice for the Associated Press, appropriately enough"
 
 ## Requirements ##
-Entitle requires PHP 5.4 or above. It has been tested with Craft 2.6.
+Each release of Entitle is [automatically tested][travis] against PHP 5.5 and above. It is also manually tested on the most recent version of Craft.
+
+[travis]: https://travis-ci.org/experience/entitle.craft-plugin "See the Entitle build status on Travis CI"
 
 ## Installation ##
 
