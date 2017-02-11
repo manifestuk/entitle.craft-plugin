@@ -9,5 +9,15 @@
       "[Added] Implement `entitle` Twig filter."
     ],
     "version": "0.1.0"
+  },
+  {
+    "date": "2017-02-11T12:00:00+0000",
+    "downloadUrl": "https://github.com/experience/entitle.craft-plugin/releases/download/0.2.0/entitle-0.2.0.zip",
+    "notes": [
+      "[Added] Add documentation URL.",
+      "[Added] Add releases feed URL.",
+      "[Fixed] Fix 'latest release' URL in `src/README.md`."
+    ],
+    "version": "0.2.0"
   }
 ]
