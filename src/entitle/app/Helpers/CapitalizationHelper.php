@@ -56,9 +56,30 @@ class CapitalizationHelper
      */
     public function capitalize($string)
     {
-        return $this->createStringFromWords(
+        $string = $this->normalizeInput($string);
+
+        $string = $this->createStringFromWords(
             $this->processWords($this->splitStringIntoWords($string))
         );
+
+        return $this->normalizeOutput($string);
+    }
+
+    /**
+     * Normalises the given string, ready for capitalisation.
+     *
+     * @param string $string
+     *
+     * @return string
+     */
+    protected function normalizeInput($string)
+    {
+        $string = $this->normalizeInputWhitespace($string);
+        $string = $this->normalizeInputSpecialCharacters($string);
+        $string = $this->normalizeInputPunctuation($string);
+        $string = $this->normalizeInputConjunctions($string);
+        $string = $this->normalizeInputForwardSlashes($string);
+        return $string;
     }
 
     /**
@@ -86,14 +107,15 @@ class CapitalizationHelper
         $length = count($words) - 1;
 
         for ($index = 0; $index <= $length; $index++) {
-            $word = $words[$index];
+            list($prefix, $word, $suffix) = $this->splitWordIntoParts(
+                $words[$index]);
 
             // The first and last words are always capitalised.
-            if ($index == 0 or $index == $length) {
-                $processed[] = $this->processFirstLastWord($word);
-            } else {
-                $processed[] = $this->processWord($word);
-            }
+            $word = ($index == 0 or $index == $length)
+                ? $this->processFirstLastWord($word)
+                : $this->processWord($word);
+
+            $processed[] = $prefix . $word . $suffix;
         }
 
         return $processed;
@@ -109,6 +131,105 @@ class CapitalizationHelper
     protected function splitStringIntoWords($string)
     {
         return explode(' ', $string);
+    }
+
+    /**
+     * Normalises the given string, ready for output.
+     *
+     * @param string $string
+     *
+     * @return string
+     */
+    protected function normalizeOutput($string)
+    {
+        $string = $this->normalizeOutputForwardSlashes($string);
+        return $string;
+    }
+
+    /**
+     * Removes leading and trailing whitespace, and collapses all internal
+     * whitespace to a single space.
+     *
+     * @param string $string
+     *
+     * @return string
+     */
+    protected function normalizeInputWhitespace($string)
+    {
+        return $this->replacePattern(trim($string), '/[\s]+/', ' ');
+    }
+
+    /**
+     * Removes the following "special" characters from the given string.
+     *
+     * U+200B zero width space
+     * U+200C zero width non-joiner Unicode code point
+     * U+200D zero width joiner Unicode code point
+     * U+FEFF zero width no-break space Unicode code point
+     *
+     * @param string $string
+     *
+     * @return string
+     */
+    protected function normalizeInputSpecialCharacters($string)
+    {
+        return $this->replacePattern($string, '/[\x{200B}-\x{200D}]+/u', '');
+    }
+
+    /**
+     * Ensures that punctuation characters have no leading spaces, and one
+     * trailing space.
+     *
+     * @param string $string
+     *
+     * @return string
+     */
+    protected function normalizeInputPunctuation($string)
+    {
+        return $this->replacePattern($string, '/\s?([,;:])\s?/', '$1 ');
+    }
+
+    /**
+     * Ensures that "conjunction" characters (&, +, *) have one leading space,
+     * and one trailing space.
+     *
+     * @param string $string
+     *
+     * @return string
+     */
+    protected function normalizeInputConjunctions($string)
+    {
+        return $this->replacePattern($string, '/\s?([&\+\*])\s?/', ' $1 ');
+    }
+
+    /**
+     * Ensures that forwards slashes have one leading space, and one trailing
+     * space. These spaces will be removed when preparing the string for
+     * output, but are required for the word capitalisation to work correctly.
+     *
+     * @param string $string
+     *
+     * @return string
+     */
+    public function normalizeInputForwardSlashes($string)
+    {
+        return $this->replacePattern($string, '/\s?(\/)\s?/', ' $1 ');
+    }
+
+    /**
+     * Splits the given word into an array with the following structure:
+     * - Zero or more non-word characters (e.g. '“')
+     * - Zero or more word characters (e.g. 'so-called')
+     * - Zero or more non-word characters (e.g. '”')
+     *
+     * @param string $word
+     *
+     * @return string[]
+     */
+    protected function splitWordIntoParts($word)
+    {
+        preg_match('/^(\W*)(\w*)(\W*)$/', $word, $parts);
+        return array_slice($parts, 1);
     }
 
     /**
@@ -145,6 +266,35 @@ class CapitalizationHelper
         }
 
         return $this->capitalizeWord($word);
+    }
+
+    /**
+     * Removes spaces around forward slashes, ready for output.
+     *
+     * @param string $string
+     *
+     * @return string
+     */
+    protected function normalizeOutputForwardSlashes($string)
+    {
+        return str_replace(' / ', '/', $string);
+    }
+
+    /**
+     * Replaces all matches of the given regular expression pattern in the
+     * given string with the given replacement. If an error occurs, returns the
+     * original string.
+     *
+     * @param string $string
+     * @param string $pattern
+     * @param string $replacement
+     *
+     * @return string
+     */
+    protected function replacePattern($string, $pattern, $replacement)
+    {
+        $replaced = preg_replace($pattern, $replacement, $string);
+        return is_null($replaced) ? $string : $replaced;
     }
 
     /**
