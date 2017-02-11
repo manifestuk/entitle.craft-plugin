@@ -5,7 +5,9 @@ project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased] ##
 ### Added ###
 ### Changed ###
+
 ### Fixed ###
+- Fix "diff" URLs in CHANGELOG.
 
 ## [0.2.0] - 2017-02-11 ##
 ### Added ###
@@ -22,5 +24,5 @@ project adheres to [Semantic Versioning](http://semver.org/).
 - Implement `craft.entitle.capitalize` template variable.
 - Implement `entitle` Twig filter.
 
-[0.2.0]: https://github.com/experience/entitle.craftplugin/compare/v0.1.0...HEAD
-[Unreleased]: https://github.com/experience/entitle.craftplugin/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/experience/entitle.craft-plugin/compare/0.1.0...HEAD
+[Unreleased]: https://github.com/experience/entitle.craft-plugin/compare/0.2.0...HEAD
