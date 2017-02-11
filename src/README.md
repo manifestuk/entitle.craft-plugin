@@ -13,7 +13,7 @@ Entitle requires PHP 5.4 or above. It has been tested with Craft 2.6.
 3. Navigate to the "Admin &rarr; Settings &rarr; Plugins" page, and activate Entitle.
 4. Optionally configure Entitle, as described in the next section.
 
-[download]: https://github.com/monooso/entitle.craft-plugin/releases/latest "Download the latest release"
+[download]: https://github.com/experience/entitle.craft-plugin/releases/latest "Download the latest release"
 
 ## Configuration ##
 Entitle allows you to specify "protected" words, which are not subject to the AP capitalisation rules. This is useful for ensuring that acronyms, brand names, and the like are not modified.
