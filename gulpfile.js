@@ -9,7 +9,7 @@ var gulp = require('gulp')
  * @param string type The bump type (major|minor|patch).
  */
 var bumpVersion = function(type) {
-  return gulp.src('./src/entitle/config.json')
+  return gulp.src('./src/entitle/plugin.json')
     .pipe(bump({type: type}))
     .pipe(gulp.dest('./src/entitle/'));
 }
@@ -29,7 +29,7 @@ gulp.task('copy-to-tmp', ['clean-tmp'], function () {
 
 // Build a zip file for distribution.
 gulp.task('build', ['copy-to-tmp'], function () {
-  var config = require('./src/entitle/config.json')
+  var config = require('./src/entitle/plugin.json')
     , filename = 'entitle-' + config.version + '.zip';
 
   return gulp.src('tmp/**/*')

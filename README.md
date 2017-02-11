@@ -21,7 +21,7 @@ $> git push && git push --tags
 `````
 
 In the above example, Gulp automatically bumps the patch version in the
-`src/entitle/config.json` file, and generates a new "release"
+`src/entitle/plugin.json` file, and generates a new "release"
 zip file (in this case `releases/entitle-1.2.1.zip`).
 
 Committing the changes and tagging the release are still a manual operation at
