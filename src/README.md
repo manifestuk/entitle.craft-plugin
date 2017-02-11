@@ -1,4 +1,7 @@
 ## Entitle ##
+
+[![Build Status](https://travis-ci.org/experience/entitle.craft-plugin.svg?branch=master)](https://travis-ci.org/experience/entitle.craft-plugin)
+
 Entitle is a [Craft plugin][craft] which makes it easy to apply AP-style title capitalisation rules to the text on your website.
 
 [craft]: https://craftcms.com "The CMS of choice for the Associated Press, appropriately enough"
