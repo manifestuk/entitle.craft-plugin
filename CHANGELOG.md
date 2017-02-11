@@ -11,6 +11,7 @@ project adheres to [Semantic Versioning](http://semver.org/).
 ### Added ###
 - Add documentation URL.
 - Add releases feed URL.
+- Add support for automated testing on Travis CI.
 
 ### Fixed ###
 - Fix "latest release" URL in `src/README.md`.

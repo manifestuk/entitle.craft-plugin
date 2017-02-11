@@ -16,6 +16,7 @@
     "notes": [
       "[Added] Add documentation URL.",
       "[Added] Add releases feed URL.",
+      "[Added] Add support for automated testing on Travis CI.",
       "[Fixed] Fix 'latest release' URL in `src/README.md`."
     ],
     "version": "0.2.0"
