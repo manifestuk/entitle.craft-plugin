@@ -107,6 +107,26 @@ class EntitlePlugin extends BasePlugin
     }
 
     /**
+     * Returns the documentation URL.
+     *
+     * @return string
+     */
+    public function getDocumentationUrl()
+    {
+        return $this->config->documentationUrl;
+    }
+
+    /**
+     * Returns the "releases" URL.
+     *
+     * @return string
+     */
+    public function getReleaseFeedUrl()
+    {
+        return $this->config->releasesFeedUrl;
+    }
+
+    /**
      * Returns a boolean indicating whether the plugin has settings.
      *
      * @return bool

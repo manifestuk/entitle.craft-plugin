@@ -1,0 +1,13 @@
+[
+  {
+    "date": "2017-02-11T02:10:00+0000",
+    "downloadUrl": "https://github.com/experience/entitle.craft-plugin/releases/download/0.1.0/entitle-0.1.0.zip",
+    "notes": [
+      "# Initial Release #",
+      "[Added] Implement `craft()->entitle->capitalize` service method.",
+      "[Added] Implement `craft.entitle.capitalize` template variable.",
+      "[Added] Implement `entitle` Twig filter."
+    ],
+    "version": "0.1.0"
+  }
+]
