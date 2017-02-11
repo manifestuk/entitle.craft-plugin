@@ -5,7 +5,9 @@ project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased] ##
 ### Added ###
 ### Changed ###
+
 ### Fixed ###
+- Fixed "latest release" URL in `src/README.md`.
 
 ## 0.1.0 - 2017-02-11 ##
 ### Added ###
