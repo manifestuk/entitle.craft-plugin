@@ -5,6 +5,16 @@ project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased] ##
 ### Added ###
 ### Changed ###
+### Fixed ###
+
+## [0.3.0] - 2017-02-13 ##
+### Added ###
+- Add proper plugin icon.
+
+### Changed ###
+- Move plugin README to root.
+- Remove build process files from repo.
+- Remove "release" zip files from repo.
 
 ### Fixed ###
 - Fix "diff" URLs in CHANGELOG.
@@ -25,4 +35,5 @@ project adheres to [Semantic Versioning](http://semver.org/).
 - Implement `entitle` Twig filter.
 
 [0.2.0]: https://github.com/experience/entitle.craft-plugin/compare/0.1.0...HEAD
-[Unreleased]: https://github.com/experience/entitle.craft-plugin/compare/0.2.0...HEAD
+[0.3.0]: https://github.com/experience/entitle.craft-plugin/compare/0.2.0...HEAD
+[Unreleased]: https://github.com/experience/entitle.craft-plugin/compare/0.3.0...HEAD

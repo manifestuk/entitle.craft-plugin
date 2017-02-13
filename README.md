@@ -14,7 +14,7 @@ Each release of Entitle is [automatically tested][travis] against PHP 5.5 and ab
 ## Installation ##
 
 1. [Download the latest release][download], and unzip it.
-2. Copy the `src/entitle` folder to your `craft/plugins` directory.
+2. Copy the `entitle` folder to your `craft/plugins` directory.
 3. Navigate to the "Admin &rarr; Settings &rarr; Plugins" page, and activate Entitle.
 4. Optionally configure Entitle, as described in the next section.
 
