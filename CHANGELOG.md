@@ -4,8 +4,11 @@ project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] ##
 ### Added ###
+
 ### Changed ###
+
 ### Fixed ###
+- Fix documentation URL in `plugin.json`.
 
 ## [0.3.0] - 2017-02-13 ##
 ### Added ###
