@@ -127,6 +127,27 @@ class EntitlePlugin extends BasePlugin
     }
 
     /**
+     * Returns a faux schema version, so Craft doesn't attempt to run database
+     * updates when the plugin version changes.
+     *
+     * @return string
+     */
+    public function getSchemaVersion()
+    {
+        return '0.0.0';
+    }
+
+    /**
+     * Returns the language in which the plugin was written.
+     *
+     * @return string
+     */
+    public function getSourceLanguage()
+    {
+        return 'en_gb';
+    }
+
+    /**
      * Returns a boolean indicating whether the plugin has settings.
      *
      * @return bool
