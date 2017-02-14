@@ -121,31 +121,17 @@ class CapitalizationHelperTest extends BaseTest
         $this->assertEquals($expected, $this->subject->capitalize($input));
     }
 
-    public function testItNormalizedWhitespaceAroundAmpersands()
-    {
-        $input = 'of mice&men';
-        $expected = 'Of Mice & Men';
-        $this->assertEquals($expected, $this->subject->capitalize($input));
-    }
-
-    public function testItNormalizedWhitespaceAroundPlusSigns()
-    {
-        $input = 'of mice+men';
-        $expected = 'Of Mice + Men';
-        $this->assertEquals($expected, $this->subject->capitalize($input));
-    }
-
-    public function testItNormalizedWhitespaceAroundAsterisks()
-    {
-        $input = 'width*height';
-        $expected = 'Width * Height';
-        $this->assertEquals($expected, $this->subject->capitalize($input));
-    }
-
     public function testItHandlesCapitalizationWithForwardSlashes()
     {
         $input = 'this/that/other';
         $expected = 'This/That/Other';
+        $this->assertEquals($expected, $this->subject->capitalize($input));
+    }
+
+    public function testItHandlesVersionNumbers()
+    {
+        $input = 'making craft play nicely with MySQL 5.7.5+';
+        $expected = 'Making Craft Play Nicely With MySQL 5.7.5+';
         $this->assertEquals($expected, $this->subject->capitalize($input));
     }
 }

@@ -77,7 +77,6 @@ class CapitalizationHelper
         $string = $this->normalizeInputWhitespace($string);
         $string = $this->normalizeInputSpecialCharacters($string);
         $string = $this->normalizeInputPunctuation($string);
-        $string = $this->normalizeInputConjunctions($string);
         $string = $this->normalizeInputForwardSlashes($string);
         return $string;
     }
@@ -190,19 +189,6 @@ class CapitalizationHelper
     }
 
     /**
-     * Ensures that "conjunction" characters (&, +, *) have one leading space,
-     * and one trailing space.
-     *
-     * @param string $string
-     *
-     * @return string
-     */
-    protected function normalizeInputConjunctions($string)
-    {
-        return $this->replacePattern($string, '/\s?([&\+\*])\s?/', ' $1 ');
-    }
-
-    /**
      * Ensures that forwards slashes have one leading space, and one trailing
      * space. These spaces will be removed when preparing the string for
      * output, but are required for the word capitalisation to work correctly.
@@ -228,7 +214,17 @@ class CapitalizationHelper
      */
     protected function splitWordIntoParts($word)
     {
-        preg_match('/^(\W*)(\w*)(\W*)$/', $word, $parts);
+        $wordChars = '[A-z0-9\.\+\-]';
+        $nonWordChars = '[^A-z0-9\.\+\-]';
+
+        $pattern = sprintf(
+            '/^(%s*?)(%s*)(%s*?)$/',
+            $nonWordChars,
+            $wordChars,
+            $nonWordChars
+        );
+
+        preg_match($pattern, $word, $parts);
         return array_slice($parts, 1);
     }
 
