@@ -32,5 +32,16 @@
       "[Fixed] Fix 'diff' URLs in CHANGELOG."
     ],
     "version": "0.3.0"
+  },
+  {
+    "date": "2017-02-14T11:15:00+0000",
+    "downloadUrl": "https://github.com/experience/entitle.craft-plugin/releases/download/0.4.0/entitle-0.4.0.zip",
+    "notes": [
+      "[Changed] Remove normalisation of 'conjunctions' (+, &, *).",
+      "[Fixed] Fix issue with version number strings (e.g. '5.7.5+').",
+      "[Fixed] Fix documentation URL in `plugin.json`.",
+      "[Fixed] Ensure plugin doesn't attempt to run database migrations on update."
+    ],
+    "version": "0.4.0"
   }
 ]
