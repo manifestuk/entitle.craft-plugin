@@ -1,7 +1,7 @@
 {
   "name": "Entitle",
   "description": "AP-style title capitalisation for Craft CMS.",
-  "version": "0.4.0",
+  "version": "1.0.0",
   "developer": "Experience",
   "developerUrl": "https://experiencehq.net",
   "documentationUrl": "https://github.com/experience/entitle.craft-plugin/blob/master/README.md",
