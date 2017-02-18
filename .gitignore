@@ -1,8 +1,4 @@
-# System files
 .DS_Store
 .idea/
-node_modules/
-releases/
-tmp/
 vendor/
 src/tests/coverage/
