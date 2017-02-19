@@ -7,6 +7,10 @@ project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed ###
 ### Fixed ###
 
+## [1.1.1] - 2017-02-19 ##
+### Fixed ###
+- Fix fatal error, caused by PHPStorm auto-import.
+
 ## [1.1.0] - 2017-02-19 ##
 ### Added ###
 - Implement support for UTF-8 strings.

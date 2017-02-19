@@ -66,5 +66,13 @@
       "[Fixed] Fix issue with words containing an apostrophe."
     ],
     "version": "1.1.0"
+  },
+  {
+    "date": "2017-02-19T10:45:00+0000",
+    "downloadUrl": "https://github.com/experience/entitle.craft-plugin/releases/download/1.1.1/entitle-1.1.1.zip",
+    "notes": [
+      "[Fixed] Fix fatal error, caused by PHPStorm auto-import."
+    ],
+    "version": "1.1.1"
   }
 ]
