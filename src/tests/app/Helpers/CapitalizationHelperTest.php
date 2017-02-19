@@ -12,22 +12,29 @@ class CapitalizationHelperTest extends BaseTest
 
     public function setUp()
     {
-        $customExclusions = ['iPhone', 'NATO', 'MySQL'];
+        $customExclusions = ['iPhone', 'CIA', 'MySQL', 'PSR'];
         $this->subject = new CapitalizationHelper($customExclusions);
     }
 
-    public function testItCapitalizesTheFirstWord()
+    public function testItCapitalizesTheFirstWordInTheString()
     {
         $input = 'of mice and men';
         $output = $this->subject->capitalize($input);
         $this->assertEquals('O', substr($output, 0, 1));
     }
 
-    public function testItCapitalizesTheLastWord()
+    public function testItCapitalizesTheLastWordInTheString()
     {
         $input = 'of mice and men';
         $output = $this->subject->capitalize($input);
         $this->assertEquals('M', substr($output, -3, 1));
+    }
+
+    public function testItCapitalizesTheFirstWordInASentence()
+    {
+        $input = '"tricky," said he. "indeed," said i';
+        $expected = '"Tricky," Said He. "Indeed," Said I';
+        $this->assertEquals($expected, $this->subject->capitalize($input));
     }
 
     public function testItDoesNotCapitalizeStandardExcludedWords()
@@ -46,8 +53,8 @@ class CapitalizationHelperTest extends BaseTest
 
     public function testItDoesNotCapitalizeCustomExcludedWords()
     {
-        $input = 'The iPhone should run MySQL for NATO';
-        $expected = 'The iPhone Should Run MySQL for NATO';
+        $input = 'The iPhone should run MySQL for the CIA';
+        $expected = 'The iPhone Should Run MySQL for the CIA';
         $this->assertEquals($expected, $this->subject->capitalize($input));
     }
 
@@ -69,6 +76,13 @@ class CapitalizationHelperTest extends BaseTest
     {
         $input = "“sad!”, said ‘president’ trump";
         $expected = "“Sad!”, Said ‘President’ Trump";
+        $this->assertEquals($expected, $this->subject->capitalize($input));
+    }
+
+    public function testItHandlesDoubleQuotedWords()
+    {
+        $input = 'of "mice" and men';
+        $expected = 'Of "Mice" and Men';
         $this->assertEquals($expected, $this->subject->capitalize($input));
     }
 
@@ -121,6 +135,13 @@ class CapitalizationHelperTest extends BaseTest
         $this->assertEquals($expected, $this->subject->capitalize($input));
     }
 
+    public function testItDoesNotAddASpaceAfterACommaNotFollowedByALetter()
+    {
+        $input = '"Tricky," said he.';
+        $expected = '"Tricky," Said He.';
+        $this->assertEquals($expected, $this->subject->capitalize($input));
+    }
+
     public function testItHandlesCapitalizationWithForwardSlashes()
     {
         $input = 'this/that/other';
@@ -132,6 +153,27 @@ class CapitalizationHelperTest extends BaseTest
     {
         $input = 'making craft play nicely with MySQL 5.7.5+';
         $expected = 'Making Craft Play Nicely With MySQL 5.7.5+';
+        $this->assertEquals($expected, $this->subject->capitalize($input));
+    }
+
+    public function testItHandlesApostrophes()
+    {
+        $input = "We're all in this together";
+        $expected = "We're All in This Together";
+        $this->assertEquals($expected, $this->subject->capitalize($input));
+    }
+
+    public function testItHandlesCurlyApostrophes()
+    {
+        $input = "We’re all in this together";
+        $expected = "We’re All in This Together";
+        $this->assertEquals($expected, $this->subject->capitalize($input));
+    }
+
+    public function testItHandlesPsrStrings()
+    {
+        $input = "The code on this site complies with PSR-2.";
+        $expected = "The Code on This Site Complies With PSR-2.";
         $this->assertEquals($expected, $this->subject->capitalize($input));
     }
 }

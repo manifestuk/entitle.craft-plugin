@@ -57,12 +57,12 @@ class CapitalizationHelper
     public function capitalize($string)
     {
         $string = $this->normalizeInput($string);
+        $parts = $this->splitStringIntoParts($string);
+        $parts = $this->processStringParts($parts);
+        $parts = $this->processFirstSentenceWordsInParts($parts);
+        $parts = $this->processLastWordInParts($parts);
 
-        $string = $this->createStringFromWords(
-            $this->processWords($this->splitStringIntoWords($string))
-        );
-
-        return $this->normalizeOutput($string);
+        return $this->joinStringParts($parts);
     }
 
     /**
@@ -75,74 +75,109 @@ class CapitalizationHelper
     protected function normalizeInput($string)
     {
         $string = $this->normalizeInputWhitespace($string);
-        $string = $this->normalizeInputSpecialCharacters($string);
         $string = $this->normalizeInputPunctuation($string);
-        $string = $this->normalizeInputForwardSlashes($string);
         return $string;
     }
 
     /**
-     * Joins the given array of words, and returns a string.
+     * Splits the given string into an array of elements.
      *
-     * @param string[] $words
-     *
-     * @return string
-     */
-    protected function createStringFromWords(array $words)
-    {
-        return implode(' ', $words);
-    }
-
-    /**
-     * Processes the given array of words.
-     *
-     * @param string[] $words
+     * @param string $string
      *
      * @return string[]
      */
-    protected function processWords(array $words)
+    protected function splitStringIntoParts($string)
     {
-        $processed = [];
-        $length = count($words) - 1;
+        return preg_split(
+            "/([A-z]+[\-'’]{1}[A-z]+)|([A-z]+)/u",
+            $string,
+            null,
+            PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE
+        );
+    }
 
-        for ($index = 0; $index <= $length; $index++) {
-            list($prefix, $word, $suffix) = $this->splitWordIntoParts(
-                $words[$index]);
+    /**
+     * Processes the given array of string parts.
+     *
+     * @param array $parts
+     *
+     * @return array
+     */
+    protected function processStringParts(array $parts)
+    {
+        array_walk($parts, function (&$part) {
+            $part = $this->isWordLike($part) ? $this->processWord($part) : $part;
+        });
 
-            // The first and last words are always capitalised.
-            $word = ($index == 0 or $index == $length)
-                ? $this->processFirstLastWord($word)
-                : $this->processWord($word);
+        return $parts;
+    }
 
-            $processed[] = $prefix . $word . $suffix;
+    /**
+     * Processes the first words in any sentences within the given array of
+     * parts.
+     *
+     * @param array $parts
+     *
+     * @return array
+     */
+    protected function processFirstSentenceWordsInParts(array $parts)
+    {
+        $length = count($parts);
+        $isFirst = true;
+
+        for ($index = 0; $index < $length; $index++) {
+            $part = $parts[$index];
+
+            if ($this->isWordLike($part)) {
+                if ($isFirst) {
+                    $parts[$index] = $this->processFirstLastWord($part);
+                    $isFirst = false;
+                }
+                continue;
+            }
+
+            if ($this->isSentenceDelimiter($part)) {
+                $isFirst = true;
+            }
         }
 
-        return $processed;
+        return $parts;
     }
 
     /**
-     * Splits the given string into an array of words.
+     * Processes the last word-like item in the given array of parts.
      *
-     * @param string $string
+     * @param array $parts
      *
-     * @return string[]
+     * @return array
      */
-    protected function splitStringIntoWords($string)
+    protected function processLastWordInParts(array $parts)
     {
-        return explode(' ', $string);
+        $parts = array_reverse($parts);
+        $length = count($parts);
+
+        for ($index = 0; $index < $length; $index++) {
+            $part = $parts[$index];
+
+            if ($this->isWordLike($part)) {
+                $parts[$index] = $this->processFirstLastWord($part);
+                break;
+            }
+        }
+
+        return array_reverse($parts);
     }
 
     /**
-     * Normalises the given string, ready for output.
+     * Converts the array of string parts back into a string.
      *
-     * @param string $string
+     * @param array $parts
      *
      * @return string
      */
-    protected function normalizeOutput($string)
+    protected function joinStringParts(array $parts)
     {
-        $string = $this->normalizeOutputForwardSlashes($string);
-        return $string;
+        return implode('', $parts);
     }
 
     /**
@@ -159,23 +194,6 @@ class CapitalizationHelper
     }
 
     /**
-     * Removes the following "special" characters from the given string.
-     *
-     * U+200B zero width space
-     * U+200C zero width non-joiner Unicode code point
-     * U+200D zero width joiner Unicode code point
-     * U+FEFF zero width no-break space Unicode code point
-     *
-     * @param string $string
-     *
-     * @return string
-     */
-    protected function normalizeInputSpecialCharacters($string)
-    {
-        return $this->replacePattern($string, '/[\x{200B}-\x{200D}]+/u', '');
-    }
-
-    /**
      * Ensures that punctuation characters have no leading spaces, and one
      * trailing space.
      *
@@ -185,63 +203,27 @@ class CapitalizationHelper
      */
     protected function normalizeInputPunctuation($string)
     {
-        return $this->replacePattern($string, '/\s?([,;:])\s?/', '$1 ');
+        return $this->replacePattern(
+            $string,
+            '/\s*([,;:])\s*([A-z])/',
+            '$1 $2'
+        );
     }
 
     /**
-     * Ensures that forwards slashes have one leading space, and one trailing
-     * space. These spaces will be removed when preparing the string for
-     * output, but are required for the word capitalisation to work correctly.
+     * Returns a boolean indicating whether the given string looks, walks, and
+     * talks like a word.
      *
      * @param string $string
      *
-     * @return string
+     * @return bool
      */
-    public function normalizeInputForwardSlashes($string)
+    protected function isWordLike($string)
     {
-        return $this->replacePattern($string, '/\s?(\/)\s?/', ' $1 ');
-    }
-
-    /**
-     * Splits the given word into an array with the following structure:
-     * - Zero or more non-word characters (e.g. '“')
-     * - Zero or more word characters (e.g. 'so-called')
-     * - Zero or more non-word characters (e.g. '”')
-     *
-     * @param string $word
-     *
-     * @return string[]
-     */
-    protected function splitWordIntoParts($word)
-    {
-        $wordChars = '[A-z0-9\.\+\-]';
-        $nonWordChars = '[^A-z0-9\.\+\-]';
-
-        $pattern = sprintf(
-            '/^(%s*?)(%s*)(%s*?)$/',
-            $nonWordChars,
-            $wordChars,
-            $nonWordChars
+        return (bool)preg_match(
+            "/(^[A-z]+[\-'’]{1}[A-z]+$)|(^[A-z]+$)/u",
+            $string
         );
-
-        preg_match($pattern, $word, $parts);
-        return array_slice($parts, 1);
-    }
-
-    /**
-     * Processes the first or last word in the sentence. The first and last
-     * word should always be capitalised, _unless_ it is a custom protected
-     * word.
-     *
-     * @param string $word
-     *
-     * @return string
-     */
-    protected function processFirstLastWord($word)
-    {
-        return $this->isCustomProtectedWord($word)
-            ? $word
-            : $this->capitalizeWord($word);
     }
 
     /**
@@ -265,15 +247,32 @@ class CapitalizationHelper
     }
 
     /**
-     * Removes spaces around forward slashes, ready for output.
+     * Processes the first or last word in the sentence. The first and last
+     * word should always be capitalised, _unless_ it is a custom protected
+     * word.
      *
-     * @param string $string
+     * @param string $word
      *
      * @return string
      */
-    protected function normalizeOutputForwardSlashes($string)
+    protected function processFirstLastWord($word)
     {
-        return str_replace(' / ', '/', $string);
+        return $this->isCustomProtectedWord($word)
+            ? $word
+            : $this->capitalizeWord($word);
+    }
+
+    /**
+     * Returns a boolean indicating whether the given string is a sentence
+     * delimiter.
+     *
+     * @param string $string
+     *
+     * @return bool
+     */
+    protected function isSentenceDelimiter($string)
+    {
+        return $string === '.';
     }
 
     /**
@@ -291,31 +290,6 @@ class CapitalizationHelper
     {
         $replaced = preg_replace($pattern, $replacement, $string);
         return is_null($replaced) ? $string : $replaced;
-    }
-
-    /**
-     * Returns a boolean indicating whether the given word is a custom
-     * protected word, which should not be modified.
-     *
-     * @param string $word
-     *
-     * @return bool
-     */
-    protected function isCustomProtectedWord($word)
-    {
-        return in_array($word, $this->customProtectedWords);
-    }
-
-    /**
-     * Capitalises the given word.
-     *
-     * @param string $word
-     *
-     * @return string
-     */
-    protected function capitalizeWord($word)
-    {
-        return ucfirst($this->lowercaseWord($word));
     }
 
     /**
@@ -341,5 +315,30 @@ class CapitalizationHelper
     protected function lowercaseWord($word)
     {
         return strtolower($word);
+    }
+
+    /**
+     * Returns a boolean indicating whether the given word is a custom
+     * protected word, which should not be modified.
+     *
+     * @param string $word
+     *
+     * @return bool
+     */
+    protected function isCustomProtectedWord($word)
+    {
+        return in_array($word, $this->customProtectedWords);
+    }
+
+    /**
+     * Capitalises the given word.
+     *
+     * @param string $word
+     *
+     * @return string
+     */
+    protected function capitalizeWord($word)
+    {
+        return ucfirst($this->lowercaseWord($word));
     }
 }
