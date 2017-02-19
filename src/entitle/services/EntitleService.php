@@ -1,7 +1,6 @@
 <?php namespace Craft;
 
 use Experience\Entitle\App\Helpers\CapitalizationHelper;
-use Experience\Entitle\App\Utilities\Logger;
 
 class EntitleService extends BaseApplicationComponent
 {
@@ -11,7 +10,7 @@ class EntitleService extends BaseApplicationComponent
     protected $helper;
 
     /**
-     * @var Logger
+     * @var \Experience\Entitle\App\Utilities\Logger
      */
     protected $logger;
 
