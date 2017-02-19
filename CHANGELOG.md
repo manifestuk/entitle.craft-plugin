@@ -7,6 +7,19 @@ project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed ###
 ### Fixed ###
 
+## [1.1.0] - 2017-02-19 ##
+### Added ###
+- Implement support for UTF-8 strings.
+- Implement support for strings containing multiple sentences.
+
+### Changed ###
+- Safety first; if all else fails, return the original string.
+- Rewrite parser to be more robust. Thank lucky stars for unit tests.
+- Improve instructions on settings page.
+
+### Fixed ###
+- Fix issue with words containing an apostrophe.
+
 ## [1.0.0] - 2017-02-18 ##
 ### Added ###
 - Add "release" zips to repository.
@@ -55,4 +68,5 @@ project adheres to [Semantic Versioning](http://semver.org/).
 [0.3.0]: https://github.com/experience/entitle.craft-plugin/compare/0.2.0...HEAD
 [0.4.0]: https://github.com/experience/entitle.craft-plugin/compare/0.3.0...HEAD
 [1.0.0]: https://github.com/experience/entitle.craft-plugin/compare/0.4.0...HEAD
-[Unreleased]: https://github.com/experience/entitle.craft-plugin/compare/1.0.0...HEAD
+[1.1.0]: https://github.com/experience/entitle.craft-plugin/compare/1.0.0...HEAD
+[Unreleased]: https://github.com/experience/entitle.craft-plugin/compare/1.1.0...HEAD
