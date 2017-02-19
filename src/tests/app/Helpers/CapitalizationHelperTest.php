@@ -12,7 +12,7 @@ class CapitalizationHelperTest extends BaseTest
 
     public function setUp()
     {
-        $customExclusions = ['iPhone', 'NATO', 'MySQL'];
+        $customExclusions = ['iPhone', 'CIA', 'MySQL', 'PSR'];
         $this->subject = new CapitalizationHelper($customExclusions);
     }
 
@@ -53,8 +53,8 @@ class CapitalizationHelperTest extends BaseTest
 
     public function testItDoesNotCapitalizeCustomExcludedWords()
     {
-        $input = 'The iPhone should run MySQL for NATO';
-        $expected = 'The iPhone Should Run MySQL for NATO';
+        $input = 'The iPhone should run MySQL for the CIA';
+        $expected = 'The iPhone Should Run MySQL for the CIA';
         $this->assertEquals($expected, $this->subject->capitalize($input));
     }
 
@@ -167,6 +167,13 @@ class CapitalizationHelperTest extends BaseTest
     {
         $input = "We’re all in this together";
         $expected = "We’re All in This Together";
+        $this->assertEquals($expected, $this->subject->capitalize($input));
+    }
+
+    public function testItHandlesPsrStrings()
+    {
+        $input = "The code on this site complies with PSR-2.";
+        $expected = "The Code on This Site Complies With PSR-2.";
         $this->assertEquals($expected, $this->subject->capitalize($input));
     }
 }
