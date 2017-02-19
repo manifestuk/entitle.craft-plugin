@@ -1,6 +1,7 @@
 <?php namespace Craft;
 
 use Experience\Entitle\App\Helpers\CapitalizationHelper;
+use Experience\Entitle\App\Utilities\Logger;
 
 class EntitleService extends BaseApplicationComponent
 {
@@ -10,11 +11,17 @@ class EntitleService extends BaseApplicationComponent
     protected $helper;
 
     /**
+     * @var Logger
+     */
+    protected $logger;
+
+    /**
      * Constructor.
      */
     public function __construct()
     {
         $this->helper = EntitlePlugin::$container->get('CapitalizationHelper');
+        $this->logger = EntitlePlugin::$container->get('Logger');
     }
 
     /**
@@ -26,6 +33,11 @@ class EntitleService extends BaseApplicationComponent
      */
     public function capitalize($string)
     {
-        return $this->helper->capitalize($string);
+        try {
+            return $this->helper->capitalize($string);
+        } catch (\Exception $e) {
+            $this->logger->logError($e->getMessage());
+            return $string;
+        }
     }
 }
