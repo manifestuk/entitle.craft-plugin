@@ -2,12 +2,11 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [2.0.0] - 2018-04-01
 ### Added
-### Changed
-### Fixed
+- Update for Craft 3.
 
-[Unreleased]: https://github.com/experience/entitle.craft-plugin/compare/1.1.1...HEAD
+[2.0.0]: https://github.com/experience/entitle.craft-plugin/compare/1.1.1...HEAD
 
 ## [1.1.1] - 2017-02-19
 ### Fixed
