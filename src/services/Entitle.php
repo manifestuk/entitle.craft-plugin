@@ -8,6 +8,24 @@ use yii\base\Component;
 class Entitle extends Component
 {
     /**
+     * @var ProtectedWords
+     */
+    protected $wordHelper;
+
+    /**
+     * Constructor.
+     *
+     * @param array $customWords Array of custom protected words
+     * @param array $config      Configuration array, inherited from parent
+     */
+    public function __construct(array $customWords = [], array $config = [])
+    {
+        $this->wordHelper = new ProtectedWords($customWords);
+
+        parent::__construct($config);
+    }
+
+    /**
      * Capitalise a string, according to AP rules
      *
      * @param string $input
@@ -188,11 +206,11 @@ class Entitle extends Component
      */
     protected function processWord(string $word): string
     {
-        if (ProtectedWords::isDefault($word)) {
+        if ($this->wordHelper->isDefault($word)) {
             return $this->toLowercase($word);
         }
 
-        if (ProtectedWords::isCustom($word)) {
+        if ($this->wordHelper->isCustom($word)) {
             return $word;
         }
 
@@ -211,7 +229,7 @@ class Entitle extends Component
      */
     protected function processFirstLastWord(string $word): string
     {
-        return ProtectedWords::isCustom($word)
+        return $this->wordHelper->isCustom($word)
             ? $word
             : $this->capitalizeWord($word);
     }
