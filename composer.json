@@ -1,0 +1,42 @@
+{
+  "name": "experience/entitle",
+  "description": "AP-style title capitalisation for Craft CMS.",
+  "type": "craft-plugin",
+  "license": "MIT",
+  "version": "2.0.0",
+  "authors": [
+    {
+      "name": "Stephen Lewis",
+      "email": "stephen@experiencehq.net"
+    }
+  ],
+  "support": {
+    "email": "stephen@experiencehq.net"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "php": "^7.1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "experience\\entitle\\": "src/",
+      "experience\\entitle\\tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "changelogUrl": "https://github.com/experience/entitle.craft-plugin/blob/master/CHANGELOG.md",
+    "documentationUrl": "https://github.com/experience/entitle.craft-plugin/blob/master/README.md",
+    "class": "experience\\entitle\\Entitle",
+    "developer": "Experience",
+    "developerUrl": "https://experiencehq.net",
+    "downloadUrl": "https://github.com/experience/entitle.craft-plugin/archive/master.zip",
+    "handle": "entitle",
+    "name": "Entitle",
+    "sourceLanguage": "en-GB"
+  },
+  "require-dev": {
+    "codeception/codeception": "dev-master",
+    "craftcms/cms": "^3.0.0-RC1"
+  }
+}
