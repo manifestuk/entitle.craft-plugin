@@ -8,14 +8,6 @@ use yii\base\Component;
 class Entitle extends Component
 {
     /**
-     * Initialise the service
-     */
-    public function init()
-    {
-        parent::init();
-    }
-
-    /**
      * Capitalise a string, according to AP rules
      *
      * @param string $input
