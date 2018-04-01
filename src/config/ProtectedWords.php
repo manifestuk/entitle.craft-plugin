@@ -5,32 +5,48 @@ namespace experience\entitle\config;
 class ProtectedWords
 {
     /**
+     * Custom protected words, as defined by the user
+     *
      * @var array
      */
-    protected static $customWords = [];
+    protected $customWords;
 
     /**
+     * The default protected words, as defined by the AP
+     *
      * @var array
      */
-    protected static $defaultWords = [
-        'a',
-        'an',
-        'and',
-        'at',
-        'but',
-        'by',
-        'for',
-        'in',
-        'nor',
-        'of',
-        'on',
-        'or',
-        'so',
-        'the',
-        'to',
-        'up',
-        'yet',
-    ];
+    protected $defaultWords;
+
+    /**
+     * Constructor.
+     *
+     * @param array $customWords
+     */
+    public function __construct(array $customWords = [])
+    {
+        $this->initializeDefaultWords();
+        $this->initializeCustomWords($customWords);
+    }
+
+    /**
+     * Initialise the default protected words
+     */
+    protected function initializeDefaultWords()
+    {
+        $this->defaultWords = explode(
+            ' ', 'a an and at but by for in nor of on or so the to up yet');
+    }
+
+    /**
+     * Set the custom protected words
+     *
+     * @param array $customWords
+     */
+    protected function initializeCustomWords(array $customWords)
+    {
+        $this->customWords = array_map('trim', array_values($customWords));
+    }
 
     /**
      * Is a word protected?
@@ -39,9 +55,9 @@ class ProtectedWords
      *
      * @return bool
      */
-    public static function isProtected(string $word): bool
+    public function isProtected(string $word): bool
     {
-        return static::isDefault($word) || static::isCustom($word);
+        return $this->isDefault($word) || $this->isCustom($word);
     }
 
     /**
@@ -51,9 +67,9 @@ class ProtectedWords
      *
      * @return bool
      */
-    public static function isDefault(string $word): bool
+    public function isDefault(string $word): bool
     {
-        return in_array(strtolower($word), static::$defaultWords);
+        return in_array(strtolower($word), $this->defaultWords);
     }
 
     /**
@@ -63,42 +79,9 @@ class ProtectedWords
      *
      * @return bool
      */
-    public static function isCustom(string $word): bool
+    public function isCustom(string $word): bool
     {
-        return in_array($word, static::$customWords);
-    }
-
-    /**
-     * Revert to the default list of protected words
-     *
-     * @return array
-     */
-    public static function reset(): array
-    {
-        static::$customWords = [];
-
-        return static::all();
-    }
-
-    /**
-     * Supplement the list of protected words
-     *
-     * @param array|string $words
-     *
-     * @return array
-     */
-    public static function supplement($words): array
-    {
-        if (!is_array($words)) {
-            $words = [$words];
-        }
-
-        static::$customWords = array_unique(array_merge(
-            static::$customWords,
-            array_values($words)
-        ));
-
-        return static::all();
+        return in_array($word, $this->customWords);
     }
 
     /**
@@ -106,11 +89,11 @@ class ProtectedWords
      *
      * @return array
      */
-    public static function all(): array
+    public function all(): array
     {
         return array_unique(array_merge(
-            static::$defaultWords,
-            static::$customWords
+            $this->defaultWords,
+            $this->customWords
         ));
     }
 }
