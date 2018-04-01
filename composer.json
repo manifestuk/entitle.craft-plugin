@@ -30,8 +30,6 @@
     "developerUrl": "https://experiencehq.net",
     "downloadUrl": "https://github.com/experience/entitle.craft-plugin/archive/master.zip",
     "handle": "entitle",
-    "hasCpSection": false,
-    "hasSettings": true,
     "name": "Entitle",
     "sourceLanguage": "en-GB"
   },
